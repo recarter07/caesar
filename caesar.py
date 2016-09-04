@@ -1,5 +1,8 @@
 # caesar.py
+import webapp2
+import cgi
 
+# given code
 ALPHABET_LOWERCASE = "abcdefghijklmnopqrstuvwxyz"
 ALPHABET_UPPERCASE = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
@@ -20,5 +23,3 @@ def encrypt(text, rotation):
     for char in text:
         answer += rotate_char(char, rotation)
     return answer
-
-# Here's an extra comment, so I can prove I modified the file.
