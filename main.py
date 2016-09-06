@@ -36,6 +36,7 @@ def escape_html(s):
 #answer = encrypt("%(text)s", 8)
 #print(answer)
 
+# beware, all css formating must happen after the name/value data so the form isn't interrupted
 # define the form format:
 form="""
 <form method="post">
