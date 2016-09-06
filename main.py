@@ -33,22 +33,20 @@ def escape_html(s):
 # => prints Jgnnq, Bcej!
 
 # define answer via imported encrypt method:
-answer = encrypt("%(text)s", 8)
-print(answer)
+#answer = encrypt("%(text)s", 8)
+#print(answer)
 
 # define the form format:
 form="""
 <form method="post">
     <label>
     <b>Enter some text please.</b><br>
-    <input type="textarea" name="q" style="height: 25px; width: 400px; value="%(text)s">
+    <input type="textarea" name="textual" value="%(text)s" style="height: 25px; width: 400px;>
     </label>
     <br>
-    <label for "rot"> Rotation Amount </label>
+    <label for "rot"> <br> Rotation Amount </label>
     <br>
-    <input type=number name="rot" value="{0}">
-    <br>
-    <div style="color: blue">%(error)s</div>
+    <input type=number name="rot" value="%(rot)s">
     <br>
     <input type="Submit">
 </form>
@@ -60,21 +58,40 @@ form="""
 
 
 class MainHandler(webapp2.RequestHandler):
+    def get(self):
+        dictin = {"text" : "", "rot" : ""}
+        self.response.write(form % dictin)
+
     # define write_form method with blank defaults:
-    def write_form(self, error="", text="", rot="5"):
-        self.response.write(form % {"error": escape_html(error),
-                                    "text": escape_html(text),
-                                    "0": rot})
+    #def write_form(self, error="", text="", rot="5"):
+    #    self.response.write(form % {"error": escape_html(error),
+    #                                "text": escape_html(text),
+    #                                "0": rot})
+
+    def post(self):
+        # define answer via imported encrypt method:
+        #answer = encrypt(form % dictout, 8)
+        answer = encrypt(self.request.get('textual'), int(self.request.get('rot')))
+
+        #answDict = {"text" : self.request.get('text'), "rot" : self.request.get('rot')}
+
+        #answ = encrypt("%(text)s", "rot")
+
+        dictout = {"text" : answer,
+                   "rot" : self.request.get('rot')}
+
+        self.response.write(form % dictout)
+        #self.response.write(answer)
 
     # write form using above write_form method with blank defaults:
-    def get(self):
-        self.write_form()
+    #def get(self):
+    #    self.write_form()
         # if you used the below method, you'd be using any input as defaults:
         #self.response.write(form)
 
     # return form with encrypted answer:
-    def post(self):
-        self.response.write(answer)
+    #def post(self):
+    #    self.response.write(answer)
 
 
 # usual footer, webapp2 and debugger:
